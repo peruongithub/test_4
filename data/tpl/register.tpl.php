@@ -36,7 +36,10 @@
 
 
         .container {
-            width: 400px;
+            width: 800px;
+        }
+        #login-form > .form-signin-heading {
+            text-align: center;
         }
     </style>
 </head>
@@ -48,13 +51,14 @@
             <div id="login-form">
                 <h2 class="form-signin-heading">Авторизация на сайте</h2>
 
-                <form id="register_form" class="form-signin" action="<?php echo $url; ?>"
+                <form id="register_form" class="form-signin form-horizontal" action="<?php echo $url; ?>"
                       method="<?php echo $method; ?>" data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
                       data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
                       data-bv-feedbackicons-validating="glyphicon glyphicon-refresh" data-bv-live="enabled">
                     <!-- login -->
                     <div class="form-group">
-                        <div class="inputGroupContainer">
+                        <label class="col-sm-2 control-label" for="login">Логин</label>
+                        <div class="inputGroupContainer col-sm-6">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                                 <input name="login" type="text" class="form-control" placeholder="Логин" required
@@ -62,10 +66,12 @@
                                        value="<?php echo $login; ?>">
                             </div>
                         </div>
+                        <span class="col-sm-4 help-inline" id="login_errors"></span>
                     </div>
                     <!-- phone -->
                     <div class="form-group">
-                        <div class="inputGroupContainer">
+                        <label class="col-sm-2 control-label" for="phone">Телефон</label>
+                        <div class="inputGroupContainer col-sm-6">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
                                 <input name="phone"
@@ -77,10 +83,12 @@
                                 >
                             </div>
                         </div>
+                        <span class="col-sm-4 help-inline" id="phone_errors"></span>
                     </div>
 
                     <div class="form-group">
-                        <div class="inputGroupContainer">
+                        <label class="col-sm-2 control-label" for="country">Страна</label>
+                        <div class="inputGroupContainer col-sm-6">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
                                 <select name="country" class="form-control selectpicker">
@@ -92,10 +100,12 @@
                                 </select>
                             </div>
                         </div>
+                        <span class="col-sm-4 help-inline" id="country_errors"></span>
                     </div>
 
                     <div class="form-group">
-                        <div class="inputGroupContainer">
+                        <label class="col-sm-2 control-label" for="city">Город</label>
+                        <div class="inputGroupContainer col-sm-6">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
                                 <select name="city" class="form-control selectpicker">
@@ -103,19 +113,23 @@
                                 </select>
                             </div>
                         </div>
+                        <span class="col-sm-4 help-inline" id="city_errors"></span>
                     </div>
 
                     <div class="form-group">
-                        <div class="inputGroupContainer">
+                        <label class="col-sm-2 control-label" for="password">Пароль</label>
+                        <div class="inputGroupContainer col-sm-6">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-sunglasses"></i></span>
                                 <input name="password" type="password" class="form-control" placeholder="Password"
                                        required>
                             </div>
                         </div>
+                        <span class="col-sm-4 help-inline" id="password_errors"></span>
                     </div>
                     <div class="form-group">
-                        <div class="inputGroupContainer">
+                        <label class="col-sm-2 control-label" for="confirm_password">Пароль еще раз</label>
+                        <div class="inputGroupContainer col-sm-6">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-sunglasses"></i></span>
                                 <input name="confirm_password" type="password" class="form-control"
@@ -123,20 +137,31 @@
                                        required>
                             </div>
                         </div>
+                        <span class="col-sm-4 help-inline" id="confirm_errors"></span>
                     </div>
                     <!-- invite -->
                     <div class="form-group">
-                        <div class="inputGroupContainer">
+                        <label class="col-sm-2 control-label" for="invite">Код инвайта</label>
+                        <div class="inputGroupContainer col-sm-6">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                                 <input name="invite" type="text" class="form-control" placeholder="Инвайт"
                                        value="" required>
                             </div>
                         </div>
+                        <span class="col-sm-4 help-inline" id="invite_errors"></span>
                     </div>
-                    <input id="registerSubmit" type="button" class="btn btn-lg btn-primary" value="Регистрация"
-                           >
-                    <input type="reset" class="btn btn-lg btn-default " value="Очистить">
+
+                    <div class="col-sm-3 col-sm-offset-2">
+                        <input id="registerSubmit" type="button"
+                               class="btn btn-lg btn-primary"
+                               value="Регистрация">
+                    </div>
+                    <div class="col-sm-3">
+                        <input type="reset"
+                               class="btn btn-lg btn-default"
+                               value="Очистить">
+                    </div>
 
                 </form>
 
@@ -209,6 +234,7 @@
                         },
                         fields: {
                             login: {
+                                container: '#login_errors',
                                 validators: {
                                     remote: {
                                         message: 'The username is not available',
@@ -217,6 +243,7 @@
                                 }
                             },
                             phone: {
+                                container: '#phone_errors',
                                 validators: {
                                     remote: {
                                         url: '<?php echo $checkPhone; ?>'
@@ -224,6 +251,7 @@
                                 }
                             },
                             invite: {
+                                container: '#invite_errors',
                                 validators: {
                                     remote: {
                                         url: '<?php echo $checkInvite; ?>'
@@ -231,6 +259,7 @@
                                 }
                             },
                             password: {
+                                container: '#password_errors',
                                 validators: {
                                     remote: {
                                         url: '<?php echo $checkPassword; ?>'
@@ -238,6 +267,7 @@
                                 }
                             },
                             confirm_password: {
+                                container: '#confirm_errors',
                                 validators: {
                                     identical: {
                                         field: 'password',
@@ -246,6 +276,7 @@
                                 }
                             },
                             country: {
+                                container: '#country_errors',
                                 validators: {
                                     notEmpty: {
                                         message: 'Please select your country'
@@ -256,6 +287,7 @@
                                 }
                             },
                             city: {
+                                container: '#city_errors',
                                 validators: {
                                     notEmpty: {
                                         message: 'Please select your country'
